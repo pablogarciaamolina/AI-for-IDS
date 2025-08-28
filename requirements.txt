@@ -1,0 +1,15 @@
+backoff==2.2.1
+joblib==1.4.2
+matplotlib==3.10.1
+mistralai==1.7.0
+numpy<=2.0
+pandas==2.2.3
+pytorch_tabnet==4.1.0
+scikit_learn==1.6.1
+seaborn==0.13.2
+tabpfn_extensions==0.0.4
+google==3.0.0
+google-api-core==2.24.0
+google-genai==1.2.0
+google-generativeai==0.8.3
+tabicl==0.1.3
