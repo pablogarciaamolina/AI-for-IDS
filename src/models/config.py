@@ -5,6 +5,7 @@ ML_SAVING_PATH = os.path.join("models", "ml")
 TABNET_SAVING_PATH = os.path.join("models", "tabnet")
 TABPFN_SAVING_PATH = os.path.join("models", "tabpfn")
 TABICL_SAVING_PATH = os.path.join("models", "tabicl")
+TABSTAR_SAVING_PATH = os.path.join("models", "tabstar")
 
 # TABNET
 TABNET_PRETRAINER_CONFIG = {
@@ -138,6 +139,25 @@ TABICL_CONFIG = {
 
 TABICL_PARAMS = {
     "predicting_batch_size": 50000
+}
+
+# TABSTAR
+
+TABSTAR_CONFIG = {
+    "lora_lr": 0.001,
+    "lora_r": 32,
+    "lora_batch": 64,
+    "global_batch": 128, # Must be divisible by `lora_batch`
+    "max_epochs": 50,
+    "patience": 5,
+    "verbose": False,
+    "device": "cuda",
+    "random_state": 42,
+    "debug": False
+}
+
+TABSTAR_PARAMS = {
+    "predicting_batch_size": -1
 }
 
 # LLMs

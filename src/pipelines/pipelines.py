@@ -21,8 +21,8 @@ class TTPipeline(BasePipeline):
         super().__init__(model)
 
     def train(self,
-        x_train: np.ndarray,
-        y_train: np.ndarray,
+        x_train: np.ndarray | pd.DataFrame,
+        y_train: np.ndarray | pd.Series,
         x_val = None,
         y_val = None,
         cv: int = 10,
@@ -42,7 +42,7 @@ class TTPipeline(BasePipeline):
         else:
             self.model.fit(x_train, y_train)
 
-    def evaluate(self, x_test, y_test, other_info: str = None) -> dict:
+    def evaluate(self, x_test: np.ndarray | pd.DataFrame, y_test: np.ndarray | pd.Series, other_info: str = None) -> dict:
         """
         Pipeline for avaluating the model
 
@@ -52,6 +52,11 @@ class TTPipeline(BasePipeline):
         """
         
         pred = self.model.predict(x_test)
+
+        if type(y_test) == pd.Series:
+            y_test = y_test.values
+        else:
+            assert type(y_test) == np.ndarray
 
         results = self.evaluate_given_predictions(
             pred,
