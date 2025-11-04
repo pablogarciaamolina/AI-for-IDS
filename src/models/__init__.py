@@ -7,7 +7,8 @@ from .trainable import (
     PreConfigured_LogisticRegression,
     PreConfigured_RandomForest,
     TabPFNModel,
-    TabICLModel
+    TabICLModel,
+    TabSTARModel
 )
 
 from .API import Gemini, Mistral

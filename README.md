@@ -9,24 +9,26 @@ Code base for the paper **"Foundation Models for Cybersecurity: A Comprehensive 
 
 ## Table of Contents
 
-1. [Project Structure](#project-structure)  
-2. [How To Use](#how-to-use)  
-3. [Modules - Specs](#modules---specs)  
-   - [DATA](#data)  
-     - [Modules Hierarchy](#modules-hierarchy)  
-     - [Configurations](#configurations)  
-       - [Kaggle Configuration](#kaggle-configuration)  
-       - [CIC-IDS2017 Configuration](#cic-ids2017-configuration)  
+1. [Project Structure](#project-structure)
+2. [How To Use](#how-to-use)
+3. [Modules - Specs](#modules---specs)
+   - [DATA](#data)
+     - [Modules Hierarchy](#modules-hierarchy)
+     - [Configurations](#configurations)
+       - [Kaggle Configuration](#kaggle-configuration)
+       - [CIC-IDS2017 Configuration](#cic-ids2017-configuration)
        - [N-BaIoT Configuration](#n-baiot)  
-       - [Data Augmentation](#data-augmentation)  
+       - [Data Augmentation](#data-augmentation)
    - [MODELS](#models)  
-     - [Modules Hierarchy](#modules-hierarchy-1)  
-     - [Configurations](#configurations-1)  
-       - [TabNet Configuration Parameters](#tabnet-configuration-parameters)  
-       - [ML Models Configuration Parameters](#ml-models-configuration-parameters)  
-       - [TabPFN Configuration Parameters](#tabpfn-configuration-parameters)  
-       - [LLMs Configuration Parameters](#llms-configuration-parameters)  
-   - [PIPELINES](#pipelines)  
+     - [Modules Hierarchy](#modules-hierarchy-1)
+     - [Configurations](#configurations-1)
+       - [TabNet Configuration Parameters](#tabnet-configuration-parameters)
+       - [ML Models Configuration Parameters](#ml-models-configuration-parameters)
+       - [TabPFN Configuration Parameters](#tabpfn-configuration-parameters)
+       - [TabICL Configuration Parameters](#tabicl-configuration-parameters)
+       - [TabSTAR Configuration Parameters](#tabstar-configuration-parameters)
+       - [LLMs Configuration Parameters](#llms-configuration-parameters)
+   - [PIPELINES](#pipelines)
      - [Modules Hierarchy](#modules-hierarchy-2)
 
 ## Project Structure
@@ -54,6 +56,7 @@ TFG/
 │   │   │   ├── tabicl.py
 │   │   │   ├── tabnet.py
 │   │   │   ├── tabpfn.py
+│   │   │   ├── tabstar.py
 │   │   ├── ...
 │   │   ├── config.py
 │   │   ├── utils.py
@@ -280,25 +283,42 @@ Below one can find the configuration parameters for every model explained.
 ##### TabICL Configuration Parameters
 
 - ``TABICL_CONFIG``
-    - **n_estimators**: Number of ensemble members
-    - **norm_methods**: Normalization methods to try
-    - **feat_shuffle_method**: Feature permutation strategy
-    - **class_shift**: Whether to apply cyclic shifts to class labels
-    - **outlier_threshold**: Z-score threshold for outlier detection and clipping
-    - **softmax_temperature**:Ccontrols prediction confidence
-    - **average_logits**: Whether ensemble averaging is done on logits or probabilities
-    - **use_hierarchical**: Enable hierarchical classification for datasets with many classe
-    - **batch_size**: Process this many ensemble members together (reduce RAM usage)
-    - **use_amp**: Use automatic mixed precision for faster inference
-    - **model_path**: Where the model checkpoint is stored
-    - **allow_auto_download**: whether automatic download to the specified path is allowed
-    - **checkpoint_version**: The version of pretrained checkpoint to use
-    - **device**: Specify device for inference
-    - **random_state**: Random seed for reproducibility
-    - **n_jobs**: Number of threads to use for PyTorch
-    - **verbose**: Print detailed information during inference
+    - **n_estimators**: Number of ensemble members.
+    - **norm_methods**: Normalization methods to try.
+    - **feat_shuffle_method**: Feature permutation strategy.
+    - **class_shift**: Whether to apply cyclic shifts to class labels.
+    - **outlier_threshold**: Z-score threshold for outlier detection and clipping.
+    - **softmax_temperature**:Ccontrols prediction confidence.
+    - **average_logits**: Whether ensemble averaging is done on logits or probabilities.
+    - **use_hierarchical**: Enable hierarchical classification for datasets with many classe.
+    - **batch_size**: Process this many ensemble members together (reduce RAM usage).
+    - **use_amp**: Use automatic mixed precision for faster inference.
+    - **model_path**: Where the model checkpoint is stored.
+    - **allow_auto_download**: whether automatic download to the specified path is allowed.
+    - **checkpoint_version**: The version of pretrained checkpoint to use.
+    - **device**: Specific device for inference.
+    - **random_state**: Random seed for reproducibility.
+    - **n_jobs**: Number of threads to use for PyTorch.
+    - **verbose**: Print detailed information during inference.
 
 - ``TABICL_PARAMS``
+    - **predicting_batch_size**: Batch size for predicting using batches. Use -1 for single batch.
+
+##### TabSTAR Configuration Parameters
+
+- ``TABSTAR_CONFIG``
+    - **lora_lr**: The learning rate used for updating the LoRA.
+    - **lora_r**: The rank of the LoRA adapter.
+    - **lora_batch**: The batch size used when training only with the LoRA parameters.
+    - **global_batch**: The effective batch size across all devices used in fine-tuning.
+    - **max_epochs**: The maximum number of epochs to run for fine-tuning.
+    - **patience**: Max epochs without improvement (on validation) before stopping early.
+    - **verbose**: Whether to print detailed logs.
+    - **device**: The device used for performing the calculations.
+    - **random_state**: Random state for reproducibility.
+    - **debug**: Whether to run in debug / verbose diagnostic mode.
+
+- ``TABSTAR_PARAMS``
     - **predicting_batch_size**: Batch size for predicting using batches. Use -1 for single batch.
 
 ##### LLMs Configuration Parameters
