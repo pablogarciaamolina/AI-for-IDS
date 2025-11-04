@@ -22,8 +22,8 @@ Code base for the paper **"Foundation Models for Cybersecurity: A Comprehensive 
    - [MODELS](#models)  
      - [Modules Hierarchy](#modules-hierarchy-1)
      - [Configurations](#configurations-1)
-       - [TabNet Configuration Parameters](#tabnet-configuration-parameters)
        - [ML Models Configuration Parameters](#ml-models-configuration-parameters)
+       - [TabNet Configuration Parameters](#tabnet-configuration-parameters)
        - [TabPFN Configuration Parameters](#tabpfn-configuration-parameters)
        - [TabICL Configuration Parameters](#tabicl-configuration-parameters)
        - [TabSTAR Configuration Parameters](#tabstar-configuration-parameters)
@@ -162,7 +162,8 @@ BaseModel
 │   │   │   └── PreConfigured_RandomForest
 │   │   ├── TabNetModel
 │   │   ├── TabPFNModel
-│   │   └── TabICLModel
+│   │   ├── TabICLModel
+│   │   └── TabSTARModel
 │   └── (other kinds of models, like torch-based DL models)
 └── LLModel
     ├── Mistral
@@ -175,8 +176,34 @@ Some models can have their configuration or their training modified via argument
 
 Below one can find the configuration parameters for every model explained.
 
-##### TabNet Configuration Parameters
+##### ML Models Configuration Parameters
 
+- ``LOGISTIC_REGRESSION_CONFIG``
+    - **multi_class**: {'auto', 'ovr', 'multinomial'}
+    - **max_iter**: Maximum number of iterations taken for the solvers to converge
+    - **solver**: Algorithm to use in the optimization problem
+    - **C**: Inverse of regularization strength; must be a positive float
+    - **random_state**: Used when solver` == 'sag', 'saga' or 'liblinear' to shuffle the data
+
+- ``LINEAR_SVC_CONFIG``
+    - **C**: Regularization parameter. The strength of the regularization is inversely proportional to C.
+    - **random_state**: Controls the pseudo random number generation for shuffling the data for the dual coordinate descent.
+    - **tol**: Tolerance for stopping criteria
+    - **max_iter**: Maximum number of iterations to be run.
+
+- ``RANDOM_FOREST_CONFIG``
+    - **n_estimators**: The number of trees in the forest.
+    - **max_depth**: The maximum depth of the tree
+    - **max_features**: The number of features to consider when looking for the best split
+    - **random_state**: Controls both the randomness of the bootstrapping of the samples used when building trees and the sampling of the features to consider when looking for the best split at each node
+
+- ``KNEIGHBORS_CONFIG``
+    - **n_neighbors**: Number of neighbors to use
+
+- ``DECISION_TREE_CONFIG``
+    - **max_depth**: The maximum depth of the tree
+
+##### TabNet Configuration Parameters
 
 - ``TABNET_PRETRAINER_CONFIG``
     - **n_d**: Dimension of the prediction layer
@@ -215,33 +242,6 @@ Below one can find the configuration parameters for every model explained.
     - **batch_size**: Batch size.
         - ⚠️ Note that if the batch size is higher than the amount of data samples provided (both training or validation) an error will be raised.
     - **patience**: Number of epochs with no improvement after which training will be stopped
-
-##### ML Models Configuration Parameters
-
-- ``LOGISTIC_REGRESSION_CONFIG``
-    - **multi_class**: {'auto', 'ovr', 'multinomial'}
-    - **max_iter**: Maximum number of iterations taken for the solvers to converge
-    - **solver**: Algorithm to use in the optimization problem
-    - **C**: Inverse of regularization strength; must be a positive float
-    - **random_state**: Used when solver` == 'sag', 'saga' or 'liblinear' to shuffle the data
-
-- ``LINEAR_SVC_CONFIG``
-    - **C**: Regularization parameter. The strength of the regularization is inversely proportional to C.
-    - **random_state**: Controls the pseudo random number generation for shuffling the data for the dual coordinate descent.
-    - **tol**: Tolerance for stopping criteria
-    - **max_iter**: Maximum number of iterations to be run.
-
-- ``RANDOM_FOREST_CONFIG``
-    - **n_estimators**: The number of trees in the forest.
-    - **max_depth**: The maximum depth of the tree
-    - **max_features**: The number of features to consider when looking for the best split
-    - **random_state**: Controls both the randomness of the bootstrapping of the samples used when building trees and the sampling of the features to consider when looking for the best split at each node
-
-- ``KNEIGHBORS_CONFIG``
-    - **n_neighbors**: Number of neighbors to use
-
-- ``DECISION_TREE_CONFIG``
-    - **max_depth**: The maximum depth of the tree
 
 ##### TabPFN Configuration Parameters
 
