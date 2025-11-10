@@ -3,3 +3,4 @@ from .ml import MLClassifier, PreConfigured_DecisionTree, PreConfigured_KNeighbo
 from .tabpfn import TabPFNModel
 from .tabicl import TabICLModel
 from .tabstar import TabSTARModel
+from .tabdpt import TabDPTModel
