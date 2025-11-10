@@ -6,6 +6,7 @@ TABNET_SAVING_PATH = os.path.join("models", "tabnet")
 TABPFN_SAVING_PATH = os.path.join("models", "tabpfn")
 TABICL_SAVING_PATH = os.path.join("models", "tabicl")
 TABSTAR_SAVING_PATH = os.path.join("models", "tabstar")
+TABDPT_SAVING_PATH = os.path.join("models", "tabdpt")
 
 # TABNET
 TABNET_PRETRAINER_CONFIG = {
@@ -142,7 +143,6 @@ TABICL_PARAMS = {
 }
 
 # TABSTAR
-
 TABSTAR_CONFIG = {
     "lora_lr": 0.001,
     "lora_r": 32,
@@ -158,6 +158,20 @@ TABSTAR_CONFIG = {
 
 TABSTAR_PARAMS = {
     "predicting_batch_size": -1
+}
+
+# TABDPT
+TABDPT_CONFIG = {
+    "inf_batch_size": 100000,
+    "normalizer": "standard",
+    "missing_indicators": False,
+    "clip_sigma": 4.,
+    "feature_reduction": "pca",
+    "faiss_metric": "l2",
+    "device": None,
+    "use_flash": True,
+    "compile": True,
+    "model_weight_path": None,
 }
 
 # LLMs
