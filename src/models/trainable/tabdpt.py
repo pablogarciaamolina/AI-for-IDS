@@ -3,6 +3,7 @@ import numpy as np
 import logging
 
 import joblib
+from sklearn.preprocessing import LabelEncoder
 from tabdpt import TabDPTClassifier
 
 from ._base import SklearnTrainableModel
@@ -18,6 +19,7 @@ class TabDPTModel(SklearnTrainableModel):
         model = TabDPTClassifier(**TABDPT_CONFIG)
         super().__init__(name, model)
 
+        self.label_encoder = LabelEncoder()
 
     def fit(self, x_train: np.ndarray, y_train: np.ndarray) -> None:
         """
@@ -29,6 +31,8 @@ class TabDPTModel(SklearnTrainableModel):
         """
 
         logging.info("Fitting TabDPT model...")
+
+        y_train = self.label_encoder.fit_transform(y_train)
                 
         self.model.fit(
             x_train,
@@ -45,7 +49,7 @@ class TabDPTModel(SklearnTrainableModel):
 
         logging.info("TabDPT predicting labels...")
 
-        return self.model.predict(x)
+        return self.label_encoder.inverse_transform(self.model.predict(x))
 
     def save(self):
         
@@ -56,6 +60,7 @@ class TabDPTModel(SklearnTrainableModel):
 
         save_dict = {
             "model": self.model,
+            "label_encoder": self.label_encoder,
         }
 
         joblib.dump(save_dict, filepath)
@@ -71,6 +76,7 @@ class TabDPTModel(SklearnTrainableModel):
 
         save_dict = joblib.load(filepath)
         self.model = save_dict["model"]
+        self.label_encoder = save_dict["label_encoder"]
 
         if hasattr(self.model, "device"):
             self.model.device = None
