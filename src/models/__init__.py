@@ -8,7 +8,8 @@ from .trainable import (
     PreConfigured_RandomForest,
     TabPFNModel,
     TabICLModel,
-    TabSTARModel
+    TabSTARModel,
+    TabDPTModel
 )
 
 from .API import Gemini, Mistral

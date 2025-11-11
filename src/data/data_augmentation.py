@@ -7,7 +7,8 @@ from typing import Optional
 import torch
 from sklearn.preprocessing import LabelEncoder
 from tabpfn import TabPFNClassifier, TabPFNRegressor
-from tabpfn.config import ModelInterfaceConfig
+# from tabpfn.config import ModelInterfaceConfig
+from tabpfn.inference_config import InferenceConfig
 from tabpfn_extensions.unsupervised import TabPFNUnsupervisedModel
 
 from src.data.config import SMOTE_CONFIG, TABPFN_DATA_GENERATOR_MODEL_CONFIG, TABPFN_DATA_GENERATOR_EXPERT_MODEL_CONFIG, TABPFN_DATA_GENERATOR_CONFIG
@@ -23,13 +24,13 @@ class TabPFNDataGenerator:
         
         self.tabpfn_clf = TabPFNClassifier(
             **TABPFN_DATA_GENERATOR_MODEL_CONFIG,
-            inference_config = ModelInterfaceConfig(
+            inference_config = InferenceConfig(
                 **TABPFN_DATA_GENERATOR_EXPERT_MODEL_CONFIG
             )
         )
         self.tabpfn_regr = TabPFNRegressor(
             **TABPFN_DATA_GENERATOR_MODEL_CONFIG,
-            inference_config = ModelInterfaceConfig(
+            inference_config = InferenceConfig(
                 **TABPFN_DATA_GENERATOR_EXPERT_MODEL_CONFIG
             )
         )

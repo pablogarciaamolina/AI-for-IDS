@@ -5,7 +5,8 @@ import joblib
 
 from sklearn.preprocessing import LabelEncoder
 from tabpfn import TabPFNClassifier
-from tabpfn.config import ModelInterfaceConfig
+# from tabpfn.config import ModelInterfaceConfig
+from tabpfn.inference_config import InferenceConfig
 from tabpfn_extensions.many_class import ManyClassClassifier
 
 from ._base import SklearnTrainableModel
@@ -16,7 +17,7 @@ class TabPFNModel(SklearnTrainableModel):
 
     def __init__(self, name: str = "tabpnf"):
 
-        expert_config = ModelInterfaceConfig(
+        expert_config = InferenceConfig(
             **TABPFN_EXPERT_CONFIG
         )
         model = TabPFNClassifier(**TABPFN_CONFIG, inference_config=expert_config)
