@@ -27,6 +27,7 @@ Code base for the paper **"Foundation Models for Cybersecurity: A Comprehensive 
        - [TabPFN Configuration Parameters](#tabpfn-configuration-parameters)
        - [TabICL Configuration Parameters](#tabicl-configuration-parameters)
        - [TabSTAR Configuration Parameters](#tabstar-configuration-parameters)
+       - [TabDPT Configuration Parameters](#tabdpt-configuration-parameters)
        - [LLMs Configuration Parameters](#llms-configuration-parameters)
    - [PIPELINES](#pipelines)
      - [Modules Hierarchy](#modules-hierarchy-2)
@@ -163,7 +164,8 @@ BaseModel
 │   │   ├── TabNetModel
 │   │   ├── TabPFNModel
 │   │   ├── TabICLModel
-│   │   └── TabSTARModel
+│   │   ├── TabSTARModel
+│   │   └── TabDPTModel
 │   └── (other kinds of models, like torch-based DL models)
 └── LLModel
     ├── Mistral
@@ -320,6 +322,20 @@ Below one can find the configuration parameters for every model explained.
 
 - ``TABSTAR_PARAMS``
     - **predicting_batch_size**: Batch size for predicting using batches. Use -1 for single batch.
+
+##### TabDPT Configuration Parameters
+
+- ``TABDPT_CONFIG``
+    - **inf_batch_size**: Size of inference batches when doing retrieval-based inference.
+    - **normalizer**: Specifies the kind of feature normalisation applied to the input. Possible values: "standard", "minmax", "robust", "power", "quantile-uniform", "quantile-normal", "log1p" or None.
+    - **missing_indicators**: Whether to add missing value indicator features as part of preprocessing.
+    - **clip_sigma**: The value used in preprocessing to clip extreme values
+    - **feature_reduction**: The method for reducing or standardising the number of features if the input has more features than the model expects. Possible values: "pca", "subsample".
+    - **faiss_metric**: The metric to use in the FAISS nearest-neighbour built for retrieval. Possible values: "l2", "ip".
+    - **device**: The device on which the model runs.
+    - **use_flash**: Whether to use optimized attention kernels.
+    - **compile**: Whether to compile the model for improved efficiency.
+    - **model_weight_path**: A path to the pre-trained model weights to load.
 
 ##### LLMs Configuration Parameters
 - ``MISTRAL_API_KEY``: Mistral API key
