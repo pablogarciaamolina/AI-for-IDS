@@ -102,7 +102,7 @@ BaseDataset
 - ``KAGGLE_USERNAME``: Kaggle username
 - ``KAGGLE_KEY``:  Kaggle key
     - ⚠️ Note that, even if these are represented as constants, Kaggle authentification REQUIERES THAT THEY ARE SET AS ENVIRONMENT VARIABLES.
-    - ⚠️ Note that Kaggle allows fo rother ways of authentification. However, this method of environment variables is the most convenient. When trying to load a dataset that is imported from kaggle (e.g. N-BaIoT), an error will be raised if the authentification is not properly set.
+    - ⚠️ Note that Kaggle allows other ways of authentification. However, this method of environment variables is the most convenient. When trying to load a dataset that is imported from kaggle (e.g. N-BaIoT), an error will be raised if the authentification is not properly set.
 
 ##### CIC-IDS2017 configuration
 
@@ -177,6 +177,11 @@ BaseModel
 Some models can have their configuration or their training modified via arguments. However, all of them can be modified in full detail using the configuration file.
 
 Below one can find the configuration parameters for every model explained.
+
+##### Hugging Face Configuration
+
+- ``HF_TOKEN``: Hugging Face token
+    - ⚠️ Note that this token is needed for models that load weights from Hugging Face and are not fully open (like requiring permission to use), such as TabPFN 2.5. Set this as an environment variable or in the configuration file (not recommended)
 
 ##### ML Models Configuration Parameters
 
