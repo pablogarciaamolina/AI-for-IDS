@@ -5,26 +5,48 @@ import joblib
 
 from sklearn.preprocessing import LabelEncoder
 from tabpfn import TabPFNClassifier
-from tabpfn.config import ModelInterfaceConfig
+from tabpfn.inference_config import InferenceConfig, default_classifier_preprocessor_configs
 from tabpfn_extensions.many_class import ManyClassClassifier
+from tabpfn.constants import ModelVersion
 
 from ._base import SklearnTrainableModel
+from src.models._base import Hugging_Face_Login
 from src.models.config import TABPFN_CONFIG, TABPFN_SAVING_PATH, TABPFN_EXPERT_CONFIG, TABPFN_PARAMS, TABPFN_MANY_CLASS_CONFIG
 
+VERSIONS: dict = {
+    "2": ModelVersion.V2,
+    "2.5": ModelVersion.V2_5
+}
 
 class TabPFNModel(SklearnTrainableModel):
 
-    def __init__(self, name: str = "tabpnf"):
+    def __init__(self, name: str = "tabpnf", version: str = "2.5", use_default_config: bool = True):
+        """
+        Constructor for the class
 
-        expert_config = ModelInterfaceConfig(
+        Args:
+            name: Name for the model
+            version: Indicates the version for the model. Supported: ["2", "2.5"]
+            use_default_config: If true use the default configuration fro the selected version. Else, use the configuration found in the config files. 
+        """
+
+        Hugging_Face_Login.login()
+        
+        expert_config = InferenceConfig(
+            PREPROCESS_TRANSFORMS=default_classifier_preprocessor_configs(),
             **TABPFN_EXPERT_CONFIG
         )
-        model = TabPFNClassifier(**TABPFN_CONFIG, inference_config=expert_config)
+
+        assert version in VERSIONS.keys(), logging.info(f"Invalid version for the model. Valid versions: {VERSIONS.keys()}")
+
+        if use_default_config:
+            model = TabPFNClassifier.create_default_for_version(VERSIONS[version])
+        else:
+            model = TabPFNClassifier.create_default_for_version(VERSIONS[version], **TABPFN_CONFIG, inference_config=expert_config)
         super().__init__(name, model)
 
         self.extension = None
         self.label_encoder = LabelEncoder()
-
 
     def fit(self, x_train: np.ndarray, y_train: np.ndarray) -> None:
         """

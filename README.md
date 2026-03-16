@@ -27,6 +27,7 @@ Code base for the paper **"Foundation Models for Cybersecurity: A Comprehensive 
        - [TabPFN Configuration Parameters](#tabpfn-configuration-parameters)
        - [TabICL Configuration Parameters](#tabicl-configuration-parameters)
        - [TabSTAR Configuration Parameters](#tabstar-configuration-parameters)
+       - [TabDPT Configuration Parameters](#tabdpt-configuration-parameters)
        - [LLMs Configuration Parameters](#llms-configuration-parameters)
    - [PIPELINES](#pipelines)
      - [Modules Hierarchy](#modules-hierarchy-2)
@@ -101,7 +102,7 @@ BaseDataset
 - ``KAGGLE_USERNAME``: Kaggle username
 - ``KAGGLE_KEY``:  Kaggle key
     - ⚠️ Note that, even if these are represented as constants, Kaggle authentification REQUIERES THAT THEY ARE SET AS ENVIRONMENT VARIABLES.
-    - ⚠️ Note that Kaggle allows fo rother ways of authentification. However, this method of environment variables is the most convenient. When trying to load a dataset that is imported from kaggle (e.g. N-BaIoT), an error will be raised if the authentification is not properly set.
+    - ⚠️ Note that Kaggle allows other ways of authentification. However, this method of environment variables is the most convenient. When trying to load a dataset that is imported from kaggle (e.g. N-BaIoT), an error will be raised if the authentification is not properly set.
 
 ##### CIC-IDS2017 configuration
 
@@ -163,7 +164,8 @@ BaseModel
 │   │   ├── TabNetModel
 │   │   ├── TabPFNModel
 │   │   ├── TabICLModel
-│   │   └── TabSTARModel
+│   │   ├── TabSTARModel
+│   │   └── TabDPTModel
 │   └── (other kinds of models, like torch-based DL models)
 └── LLModel
     ├── Mistral
@@ -175,6 +177,11 @@ BaseModel
 Some models can have their configuration or their training modified via arguments. However, all of them can be modified in full detail using the configuration file.
 
 Below one can find the configuration parameters for every model explained.
+
+##### Hugging Face Configuration
+
+- ``HF_TOKEN``: Hugging Face token
+    - ⚠️ Note that this token is needed for models that load weights from Hugging Face and are not fully open (like requiring permission to use), such as TabPFN 2.5. Set this as an environment variable or in the configuration file (not recommended)
 
 ##### ML Models Configuration Parameters
 
@@ -320,6 +327,20 @@ Below one can find the configuration parameters for every model explained.
 
 - ``TABSTAR_PARAMS``
     - **predicting_batch_size**: Batch size for predicting using batches. Use -1 for single batch.
+
+##### TabDPT Configuration Parameters
+
+- ``TABDPT_CONFIG``
+    - **inf_batch_size**: Size of inference batches when doing retrieval-based inference.
+    - **normalizer**: Specifies the kind of feature normalisation applied to the input. Possible values: "standard", "minmax", "robust", "power", "quantile-uniform", "quantile-normal", "log1p" or None.
+    - **missing_indicators**: Whether to add missing value indicator features as part of preprocessing.
+    - **clip_sigma**: The value used in preprocessing to clip extreme values
+    - **feature_reduction**: The method for reducing or standardising the number of features if the input has more features than the model expects. Possible values: "pca", "subsample".
+    - **faiss_metric**: The metric to use in the FAISS nearest-neighbour built for retrieval. Possible values: "l2", "ip".
+    - **device**: The device on which the model runs.
+    - **use_flash**: Whether to use optimized attention kernels.
+    - **compile**: Whether to compile the model for improved efficiency.
+    - **model_weight_path**: A path to the pre-trained model weights to load.
 
 ##### LLMs Configuration Parameters
 - ``MISTRAL_API_KEY``: Mistral API key
