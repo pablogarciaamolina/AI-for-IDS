@@ -8,6 +8,9 @@ TABICL_SAVING_PATH = os.path.join("models", "tabicl")
 TABSTAR_SAVING_PATH = os.path.join("models", "tabstar")
 TABDPT_SAVING_PATH = os.path.join("models", "tabdpt")
 
+# HUGGING FACE
+HF_TOKEN = os.environ.get("HF_TOKEN")
+
 # TABNET
 TABNET_PRETRAINER_CONFIG = {
     "n_d": 10,
@@ -113,7 +116,7 @@ TABPFN_MANY_CLASS_CONFIG = {
     "random_state": 0
 }
 TABPFN_PARAMS = {
-    "predicting_batch_size": 20000 # -1 for one batch (no batch predicting)
+    "predicting_batch_size": 40000 # -1 for one batch (no batch predicting)
 }
 
 # TABICL
